@@ -1,5 +1,6 @@
 import discord
 import os
+import random
 import re
 import requests
 
@@ -72,3 +73,83 @@ class SaveMyExams(commands.Cog):
         # Cleanup
         os.remove(data.question_file + ".pdf")
         os.remove(data.solution_file + ".pdf")
+
+    @commands.command(name="dsmes", help="Extract a question topic from savemyexams.co.uk")
+    async def dsmes(self, ctx, url: str, easy_question_count: int = 5, medium_question_count: int = 3, hard_question_count: int = 2) -> None:
+        # Validate the url
+        if not util.uriValidate(url):
+            await ctx.send(f'Hey {ctx.author.mention}, the url you send is not valid! Please check it again!')
+            return
+
+        # Validate that the link is really of savemyexams.co.uk
+        if not url.startswith("https://www.savemyexams.co.uk"):
+            await ctx.send(f'Hey {ctx.author.mention}, the link you send is not one of savemyexams.co.uk! Please check it again!')
+
+        await ctx.send(f'Hey {ctx.author.mention}, I\'m processing your request! This process will usually take less than 1 minute depending on the amount of requests I\'m currently processing!')
+
+        urls = util.processDifficulty(url)
+
+        # Scrape the webpage
+        easy_rawdata = PageData(ctx.author, urls["easy"])
+        easy_rawdata.scrape()
+
+        medium_rawdata = PageData(ctx.author, urls["medium"])
+        medium_rawdata.scrape()
+
+        hard_rawdata = PageData(ctx.author, urls["hard"])
+        hard_rawdata.scrape()
+
+        # Get important variable
+        subject = str(easy_rawdata.subject)
+
+        # Make sure the question count is at most the same
+        # as the amount of questions available
+        easy_question_count = min(easy_question_count, len(easy_rawdata.questions))
+        medium_question_count = min(medium_question_count, len(medium_rawdata.questions))
+        hard_question_count = min(hard_question_count, len(hard_rawdata.questions))
+
+        easy_data = []
+        medium_data = []
+        hard_data = []
+
+        # We can use *.questions here,
+        # as question and solutions should have the same amount
+        for i in range(len(easy_rawdata.questions)):
+            easy_data.append([easy_rawdata.questions[i], easy_rawdata.solutions[i]])
+
+        for i in range(len(medium_rawdata.questions)):
+            easy_data.append([medium_rawdata.questions[i], medium_rawdata.solutions[i]])
+
+        for i in range(len(hard_rawdata.questions)):
+            easy_data.append([hard_rawdata.questions[i], hard_rawdata.solutions[i]])
+
+        easy_selection = random.sample(easy_data, easy_question_count)
+        medium_selection = random.sample(medium_data, medium_question_count)
+        hard_selection = random.sample(hard_data, hard_question_count)
+
+        questions = []
+        solutions = []
+
+        for i in [easy_selection, medium_selection, hard_selection]:
+            for j in i:
+                questions.append(j[0])
+                solutions.append(j[1])
+
+        cur_time = str(time())
+
+        question_file = str(ctx.author) + " - Questions - " + cur_time + subject
+        solution_file = str(ctx.author) + " - Solutions - " + cur_time + subject
+
+        util.extractImgToPdf(questions, question_file)
+        util.extractImgToPdf(solutions, solution_file)
+
+        outputs = [
+            discord.File(question_file + ".pdf", "Questions - " + subject + ".pdf"),
+            discord.File(solution_file + ".pdf", "Solutions - " + subject + ".pdf"),
+        ]
+
+        await ctx.send(f'Hey {ctx.author.memntion}, here are the files you requested!', files = outputs)
+
+        # Cleanup
+        os.remove(question_file + ".pdf")
+        os.remove(solution_file + ".pdf")
