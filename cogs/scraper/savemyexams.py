@@ -148,7 +148,7 @@ class SaveMyExams(commands.Cog):
             discord.File(solution_file + ".pdf", "Solutions - " + subject + ".pdf"),
         ]
 
-        await ctx.send(f'Hey {ctx.author.memntion}, here are the files you requested!', files = outputs)
+        await ctx.send(f'Hey {ctx.author.mention}, here are the files you requested!', files = outputs)
 
         # Cleanup
         os.remove(question_file + ".pdf")
