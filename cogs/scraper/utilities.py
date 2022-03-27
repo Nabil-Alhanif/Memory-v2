@@ -40,6 +40,7 @@ def extractImgFromHtml(image_list):
         image_list[i] = re.findall('img.*?src="(.*?)"', str(image_list[i]))
 
     ret = [item for item in image_list if item != []]
+    print("Images: ", ret)
 
     return ret
 
