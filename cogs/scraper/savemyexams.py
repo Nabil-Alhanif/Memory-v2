@@ -112,10 +112,10 @@ class SaveMyExams(commands.Cog):
             easy_data.append([easy_rawdata.questions[i], easy_rawdata.solutions[i]])
 
         for i in range(len(medium_rawdata.questions)):
-            easy_data.append([medium_rawdata.questions[i], medium_rawdata.solutions[i]])
+            medium_data.append([medium_rawdata.questions[i], medium_rawdata.solutions[i]])
 
         for i in range(len(hard_rawdata.questions)):
-            easy_data.append([hard_rawdata.questions[i], hard_rawdata.solutions[i]])
+            hard_data.append([hard_rawdata.questions[i], hard_rawdata.solutions[i]])
 
         # Make sure the question count is at most the same
         # as the amount of questions available
