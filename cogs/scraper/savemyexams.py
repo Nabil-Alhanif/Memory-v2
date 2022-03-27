@@ -43,7 +43,7 @@ class SaveMyExams(commands.Cog):
         self.bot = bot
 
     @commands.command(name="dsme", help="Extract a question topic from savemyexams.co.uk with specific difficulties into a pdf file")
-    async def save(self, ctx, url: str) -> None:
+    async def dsme(self, ctx, url: str) -> None:
         # Validate the url
         if not util.uriValidate(url):
             await ctx.send(f'Hey {ctx.author.mention}, the url you send is not valid! Please check it again!')

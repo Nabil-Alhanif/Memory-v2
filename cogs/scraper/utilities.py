@@ -43,10 +43,12 @@ def extractImgFromHtml(image_list):
 
 def extractImgToPdf(image_list, pdf_name: str, width: int = 210, height: int = 297) -> None:
     print("Now processing: " + pdf_name)
+    print(image_list)
     image_name = []
 
     for i in range(len(image_list)):
         for j in range(len(image_list[i])):
+            print(i, j)
             print(image_list[i][j])
             response = requests.get(image_list[i][j], stream=True)
 
