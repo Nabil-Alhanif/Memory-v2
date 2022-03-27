@@ -37,18 +37,16 @@ def extractImgFromHtml(image_list):
         image_list[i] = re.sub("'", '"', str(image_list[i]))
         image_list[i] = re.findall('img.*?src="(.*?)"', str(image_list[i]))
 
-        ret = [item for item in image_list if item != []]
+    ret = [item for item in image_list if item != []]
 
-        return ret
+    return ret
 
 def extractImgToPdf(image_list, pdf_name: str, width: int = 210, height: int = 297) -> None:
     print("Now processing: " + pdf_name)
-    print(image_list)
     image_name = []
 
     for i in range(len(image_list)):
         for j in range(len(image_list[i])):
-            print(i, j)
             print(image_list[i][j])
             response = requests.get(image_list[i][j], stream=True)
 
