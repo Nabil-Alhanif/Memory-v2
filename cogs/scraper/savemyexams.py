@@ -102,12 +102,6 @@ class SaveMyExams(commands.Cog):
         # Get important variable
         subject = str(easy_rawdata.subject)
 
-        # Make sure the question count is at most the same
-        # as the amount of questions available
-        easy_question_count = min(easy_question_count, len(easy_rawdata.questions))
-        medium_question_count = min(medium_question_count, len(medium_rawdata.questions))
-        hard_question_count = min(hard_question_count, len(hard_rawdata.questions))
-
         easy_data = []
         medium_data = []
         hard_data = []
@@ -122,6 +116,12 @@ class SaveMyExams(commands.Cog):
 
         for i in range(len(hard_rawdata.questions)):
             easy_data.append([hard_rawdata.questions[i], hard_rawdata.solutions[i]])
+
+        # Make sure the question count is at most the same
+        # as the amount of questions available
+        easy_question_count = min(easy_question_count, len(easy_data))
+        medium_question_count = min(medium_question_count, len(medium_data))
+        hard_question_count = min(hard_question_count, len(hard_data))
 
         easy_selection = random.sample(easy_data, easy_question_count)
         medium_selection = random.sample(medium_data, medium_question_count)

@@ -30,6 +30,8 @@ def processDifficulty(url: str, easy_difficulty: str = 'easy', medium_difficulty
         urls["medium"] = re.sub(r'/' + hard_difficulty, r'/' + medium_difficulty, url)
         urls["hard"] = url
 
+    print("URLS: ", urls)
+
     return urls
 
 def extractImgFromHtml(image_list):
