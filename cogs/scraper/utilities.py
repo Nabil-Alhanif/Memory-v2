@@ -7,6 +7,15 @@ from module.customPdf import PDF
 from PIL import Image
 from urllib.parse import urlparse
 
+def fixUrl(url: str) -> str:
+    if url.startswith("https://"):
+        pass
+    elif url.startswith("www."):
+        url = "https://" + url
+    else:
+        url = "https://www." + url
+    return url
+
 def uriValidate(uri) -> bool:
     try:
         result = urlparse(uri)

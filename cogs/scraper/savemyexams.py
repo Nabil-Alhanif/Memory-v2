@@ -45,6 +45,8 @@ class SaveMyExams(commands.Cog):
 
     @commands.command(name="dsme", help="Extract a question topic from savemyexams.co.uk with specific difficulties into a pdf file")
     async def dsme(self, ctx, url: str) -> None:
+        util.fixUrl(url)
+
         # Validate the url
         if not util.uriValidate(url):
             await ctx.send(f'Hey {ctx.author.mention}, the url you send is not valid! Please check it again!')
@@ -76,6 +78,8 @@ class SaveMyExams(commands.Cog):
 
     @commands.command(name="dsmes", help="Extract a question topic from savemyexams.co.uk")
     async def dsmes(self, ctx, url: str, easy_question_count: int = 5, medium_question_count: int = 3, hard_question_count: int = 2) -> None:
+        util.fixUrl(url)
+
         # Validate the url
         if not util.uriValidate(url):
             await ctx.send(f'Hey {ctx.author.mention}, the url you send is not valid! Please check it again!')
