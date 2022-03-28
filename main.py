@@ -1,6 +1,8 @@
 import discord
 import os
 
+from dotenv import load_dotenv
+
 from bot import CustomBot
 
 from cogs.greetings import Greetings
@@ -8,7 +10,7 @@ from cogs.scraper.savemyexams import SaveMyExams
 from cogs.commandErrHandler import CommandErrHandler
 
 def main():
-    TOKEN = os.environ['TOKEN']
+    TOKEN = os.getenv('TOKEN')
 
     intents = discord.Intents.default()
     intents.members = True
@@ -26,4 +28,5 @@ def main():
     bot.run(TOKEN)
 
 if __name__ == "__main__":
+    load_dotenv()
     main()

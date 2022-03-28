@@ -1,6 +1,6 @@
 # Memory-v2
 
-## Depenedency:
+## Dependency:
 1. python
 2. git
 
