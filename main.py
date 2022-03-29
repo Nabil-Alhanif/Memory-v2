@@ -7,6 +7,7 @@ from bot import CustomBot
 
 from cogs.greetings import Greetings
 from cogs.scraper.savemyexams import SaveMyExams
+from cogs.translate import Translate
 from cogs.commandErrHandler import CommandErrHandler
 
 def main():
@@ -23,6 +24,7 @@ def main():
 
     bot.add_cog(Greetings(bot))
     bot.add_cog(SaveMyExams(bot))
+    bot.add_cog(Translate(bot))
     bot.add_cog(CommandErrHandler(bot))
 
     bot.run(TOKEN)
