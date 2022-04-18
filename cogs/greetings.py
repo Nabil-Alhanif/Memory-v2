@@ -5,5 +5,5 @@ class Greetings(commands.Cog):
         self.bot = bot
 
     @commands.command(name='hey')
-    async def greet(self, ctx):
+    async def greet(self, ctx) -> None:
         await ctx.send(f'Hey {ctx.author.mention}')

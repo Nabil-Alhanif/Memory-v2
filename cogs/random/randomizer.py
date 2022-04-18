@@ -56,7 +56,7 @@ class Randomizer(commands.Cog):
             groups.append(current_group)
 
         # Generate the result string
-        res = f'Hey {ctx.author.mention}, here are the results of {selection_length} member(s) divided into groups each with {group_size} member(s)!'
+        res = f'Hey {ctx.author.mention}, here are the results of {selection_length} member(s) divided into {group_count} groups!'
 
         for i in range(0, len(groups)):
             res += f'\n\nGroup {i + 1}:'
